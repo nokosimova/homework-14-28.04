@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace classes
 {
+public class ListandClient
+{
+    public List<Client> ClientList{get;set;}
+    public Client client{get;set;}
+}
 public class Client
 {
     int id{get; set;}
@@ -11,28 +16,28 @@ public class Client
     string LastName{get; set;}
     string MiddleName{get; set;}
     
-    public void Insert(ref List<Client> ClientList)
+    public static void Insert(ref object obj)
     {
+        ListandClient x = obj as ListandClient;
         Client newclient = new Client();
+        newclient.id = x.client.id;
+        newclient.Balance = x.client.Balance;
+        newclient.FirstName = x.client.FirstName;
+        newclient.LastName = x.client.LastName;
+        newclient.MiddleName = x.client.MiddleName;
 
-        newclient.id = this.id;
-        newclient.Balance = this.Balance;
-        newclient.FirstName = this.FirstName;
-        newclient.LastName = this.LastName;
-        newclient.MiddleName = this.MiddleName;
-
-        ClientList.Add(newclient);
+        x.ClientList.Add(newclient);
     }
-    public void Update(ref Client client, string FirstName = null, string LastName = null,string MiddleName = null, decimal Balance = -1)
+    public static void Update(ref Client client, string FirstName = null, string LastName = null,string MiddleName = null, decimal Balance = -1)
     {
         if (FirstName != null) client.FirstName = FirstName;
         if (LastName != null) client.LastName = LastName;
         if (MiddleName != null) client.MiddleName = MiddleName;
         if (Balance != -1 && Balance >= 0) client.Balance = Balance;
     }
-    public void Delete(ref List<Client> ClientList)
+    public static void Delete(ref List<Client> ClientList, Client client)
     {
-        ClientList.Remove(this);
+        ClientList.Remove(client);
     }
     public static Client Select(List<Client> ClientList, Client client)
     {
