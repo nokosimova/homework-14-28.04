@@ -22,7 +22,23 @@ public class Client
     string FirstName{get; set;}
     string LastName{get; set;}
     string MiddleName{get; set;}
-    
+    public Client()
+    {
+        id = 0;
+        FirstName = null;
+        LastName = null;
+        MiddleName = null;
+        Balance = -1;
+
+    }
+    public Client(int i, string f, string l, string m, decimal b)
+    {
+        id = i;
+        FirstName = f;
+        LastName = l;
+        MiddleName = m;
+        Balance = b;
+    }
     public static void Insert(object obj)
     {
         ListandClient x = obj as ListandClient;
