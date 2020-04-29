@@ -8,6 +8,13 @@ public class ListandClient
     public List<Client> ClientList{get;set;}
     public Client client{get;set;}
 }
+
+public class ListAndId
+{
+    public List<Client> ClientList{get;set;}
+    public int id{get; set;}
+
+}
 public class Client
 {
     int id{get; set;}
@@ -16,7 +23,7 @@ public class Client
     string LastName{get; set;}
     string MiddleName{get; set;}
     
-    public static void Insert(ref object obj)
+    public static void Insert(object obj)
     {
         ListandClient x = obj as ListandClient;
         Client newclient = new Client();
@@ -28,25 +35,41 @@ public class Client
 
         x.ClientList.Add(newclient);
     }
-    public static void Update(ref Client client, string FirstName = null, string LastName = null,string MiddleName = null, decimal Balance = -1)
+    public static void Update(object obj)
     {
-        if (FirstName != null) client.FirstName = FirstName;
-        if (LastName != null) client.LastName = LastName;
-        if (MiddleName != null) client.MiddleName = MiddleName;
-        if (Balance != -1 && Balance >= 0) client.Balance = Balance;
-    }
-    public static void Delete(ref List<Client> ClientList, Client client)
-    {
-        ClientList.Remove(client);
-    }
-    public static Client Select(List<Client> ClientList, Client client)
-    {
+        ListandClient x = obj as ListandClient;
         Client ans = new Client();
-        foreach (Client c in ClientList)
+        for(int i = 0; i < (x.ClientList).Count; i++)
         {
-            if (c == client) ans = c;
+            if (x.ClientList[i].id == x.client.id)
+            {
+                if (x.client.FirstName != null) x.ClientList[i].FirstName = x.client.FirstName;
+                if (x.client.LastName != null) x.ClientList[i].LastName = x.client.LastName;
+                if (x.client.MiddleName != null) x.ClientList[i].MiddleName = x.client.MiddleName;
+                if (x.client.Balance != -1 && x.client.Balance >= 0) x.ClientList[i].Balance = x.client.Balance;
+
+            }
         }
-        return ans;
+    }
+    public static void Delete(object obj)
+    {
+        ListandClient x = obj as ListandClient;
+        x.ClientList.Remove(x.client);
+    }
+    public static void Select(object obj)
+    {
+        ListAndId x = obj as ListAndId;
+        Client ans = new Client();
+        foreach (Client c in x.ClientList)
+        {
+            if (c.id == x.id)
+            {
+                Console.WriteLine($"Client id: = {c.id}");
+                Console.WriteLine($"FIO = {c.FirstName} {c.LastName} {c.MiddleName}");
+                Console.WriteLine($"Balance: {c.Balance} сом");
+            }
+            break;
+        }
     }
 }
 }
