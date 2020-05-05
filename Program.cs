@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using classes;
+using Class;
 using System.Threading;
 
 namespace HW28._04
 {
     class Program
     {
-        static List<Client> NewClientList = new List<Client>();
+        static List<Client> MainClientList = new List<Client>();
         static void Main(string[] args)
         {
           //  Client newclient = new Client();
@@ -17,25 +17,52 @@ namespace HW28._04
             decimal balance;
             string fname, lname, mname;
             
-            Thread InsertThread = new Thread(new ParameterizedThreadStart(Client.Insert));
-            Thread UpdateThread = new Thread(new ParameterizedThreadStart(Client.Update));
-            Thread DeleteThread = new Thread(new ParameterizedThreadStart(Client.Delete));
-            Thread SelectThread = new Thread(new ParameterizedThreadStart(Client.Select));
+            Thread InsertThread = new Thread(new ThreadStart(()=>{
+            }));
+            Thread UpdateThread = new Thread(new ThreadStart(()=>{}));
+            Thread DeleteThread = new Thread(new ThreadStart(()=>{}));
+            Thread SelectThread = new Thread(new ThreadStart(()=>{})));
             
             while(command)
             {
-                Console.WriteLine("Выберите действия: ");
+                Console.WriteLine("Choose action: ");
                 Console.WriteLine("------------------------------");
-                Console.WriteLine("Добавить пользователя-1");
-                Console.WriteLine("Обновить пользователя-2");
-                Console.WriteLine("Удалить пользователя -3");
-                Console.WriteLine("Выбрать по id --------4");
-                Console.WriteLine("Выход ----------------5");
+                Console.WriteLine("Insert client--1");
+                Console.WriteLine("Update client--2");
+                Console.WriteLine("Delete client--3");
+                Console.WriteLine("Select by id --4");
+                Console.WriteLine("Exit-----------5");
                 int action = int.Parse(Console.ReadLine());
                 
                 switch(action)
                 {
                     case 1:
+                        Console.Write("FirstName: ");
+                        fname = Console.ReadLine();
+
+                        Console.Write("LastName:     ");
+                        lname = Console.ReadLine();
+
+                        Console.Write("MiddleName:");
+                        mname = Console.ReadLine();
+
+                        Console.Write("Age:");
+
+
+                        Console.Write("Баланс:   ");
+                        balance = decimal.Parse(Console.ReadLine());
+
+                        Client newclient = new Client(++LastId, fname, lname, mname, balance);
+                        x.client = newclient;
+                        x.ClientList = MainClientList;
+                        
+                        InsertThread.Start(x);
+                        break;
+                    case 2:
+                        Client updateclient = new Client();
+                        Console.WriteLine("id клиента: ");
+                     //   updateclient
+
                         Console.Write("Фамилия: ");
                         fname = Console.ReadLine();
 
@@ -48,12 +75,17 @@ namespace HW28._04
                         Console.Write("Баланс:   ");
                         balance = decimal.Parse(Console.ReadLine());
 
-                        Client newclient = new Client(++LastId, fname, lname, mname, balance);
-                        x.client = newclient;
-                        x.ClientList = NewClientList;
                         
-                        InsertThread.Start(x);
                         break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        Console.WriteLine("Пока!");
+                        command = false;
+                        break;
+
                 }
             }
         

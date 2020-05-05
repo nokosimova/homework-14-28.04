@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using HW28._04;
 
-namespace classes
+namespace Class
 {
+
 public class ListandClient
 {
     public List<Client> ClientList{get;set;}
@@ -17,72 +19,65 @@ public class ListAndId
 }
 public class Client
 {
-    int id{get; set;}
+    int Id{get; set;}
     decimal Balance{get; set;}
     string FirstName{get; set;}
     string LastName{get; set;}
     string MiddleName{get; set;}
+    int Age{get; set;}
     public Client()
     {
-        id = 0;
+        Id = 0;
         FirstName = null;
         LastName = null;
         MiddleName = null;
         Balance = -1;
-
+        Age = 0;
     }
-    public Client(int i, string f, string l, string m, decimal b)
+    public Client(int id = 0, string firstname = null, string lastname = null, string midname = null, decimal balance = -1, int age = 0)
     {
-        id = i;
-        FirstName = f;
-        LastName = l;
-        MiddleName = m;
-        Balance = b;
+        Id = id;
+        FirstName = firstname;
+        LastName = lastname;
+        MiddleName = midname;
+        Balance = balance;
     }
-    public static void Insert(object obj)
+    public static void Insert(object obj, List<Client> MainList)
     {
-        ListandClient x = obj as ListandClient;
-        Client newclient = new Client();
-        newclient.id = x.client.id;
-        newclient.Balance = x.client.Balance;
-        newclient.FirstName = x.client.FirstName;
-        newclient.LastName = x.client.LastName;
-        newclient.MiddleName = x.client.MiddleName;
-
-        x.ClientList.Add(newclient);
+        Client client = obj as Client;
+        MainList.Add(client);            
     }
-    public static void Update(object obj)
+    public static void UpdateById(object obj, List<Client> MainList)
     {
-        ListandClient x = obj as ListandClient;
-        Client ans = new Client();
-        for(int i = 0; i < (x.ClientList).Count; i++)
+        Client updatedClient = obj as Client;
+        for(int i = 0; i < MainList.Count; i++)
         {
-            if (x.ClientList[i].id == x.client.id)
+            if (MainList[i].Id == updatedClient.Id)
             {
-                if (x.client.FirstName != null) x.ClientList[i].FirstName = x.client.FirstName;
-                if (x.client.LastName != null) x.ClientList[i].LastName = x.client.LastName;
-                if (x.client.MiddleName != null) x.ClientList[i].MiddleName = x.client.MiddleName;
-                if (x.client.Balance != -1 && x.client.Balance >= 0) x.ClientList[i].Balance = x.client.Balance;
-
+                if (updatedClient.FirstName != null) MainList[i].FirstName = updatedClient.FirstName;
+                if (updatedClient.LastName != null) MainList[i].LastName = updatedClient.LastName;
+                if (updatedClient.MiddleName != null) MainList[i].MiddleName = updatedClient.MiddleName;
+                if (updatedClient.Balance != -1 && updatedClient.Balance >= 0) MainList[i].Balance = updatedClient.Balance;
+                if (updatedClient.Age != 0 && updatedClient.Age > 0) MainList[i].Age = updatedClient.Age;
             }
         }
     }
-    public static void Delete(object obj)
+    public static void Delete(object obj, List<Client> MainList)
     {
-        ListandClient x = obj as ListandClient;
-        x.ClientList.Remove(x.client);
+        Client deletingClient = obj as Client;
+        MainList.Remove(deletingClient);
     }
-    public static void Select(object obj)
+    public static void Select(object obj, List<Client> MainList)
     {
-        ListAndId x = obj as ListAndId;
+        int selectedClientId = (int)obj;
         Client ans = new Client();
-        foreach (Client c in x.ClientList)
+        foreach (Client c in MainList)
         {
-            if (c.id == x.id)
+            if (c.Id == selectedClientId)
             {
-                Console.WriteLine($"Client id: = {c.id}");
-                Console.WriteLine($"FIO = {c.FirstName} {c.LastName} {c.MiddleName}");
-                Console.WriteLine($"Balance: {c.Balance} сом");
+                Console.Write("|id   |FIO                |Age     |Balance \n");
+                Console.WriteLine("----------------------------------------");
+                Console.WriteLine($"{c.Id,-3} {c.FirstName+c.LastName+c.MiddleName,-9} {c.Age,-5}{c.Balance,-15}");
             }
             break;
         }
