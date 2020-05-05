@@ -8,13 +8,13 @@ namespace Class
 
 public class Client
 {
-    int Id{get; set;}
-    decimal CurrentBalance{get; set;}
-    decimal PreviousBalance {get; set;}
-    string FirstName{get; set;}
-    string LastName{get; set;}
-    string MiddleName{get; set;}
-    int Age{get; set;}
+    public int Id{get; set;}
+    public decimal CurrentBalance{get; set;}
+    public decimal PreviousBalance {get; set;}
+    public string FirstName{get; set;}
+    public string LastName{get; set;}
+    public string MiddleName{get; set;}
+    public int Age{get; set;}
     
     public Client()
     {
@@ -54,7 +54,8 @@ public class Client
                 if (updatedClient.Age != 0 && updatedClient.Age > 0) MainList[i].Age = updatedClient.Age;
                 if (updatedClient.CurrentBalance != -1 && updatedClient.CurrentBalance >= 0)
                 { 
-                    MainList[i].PreviousBalance = MainList[i].CurrentBalance;
+                    if (MainList[i].PreviousBalance != MainList[i].CurrentBalance)
+                        MainList[i].PreviousBalance = MainList[i].CurrentBalance;
                     MainList[i].CurrentBalance = updatedClient.CurrentBalance;
                 }
             }

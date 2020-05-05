@@ -18,7 +18,7 @@ namespace HW28._04
             
             
             
-            Thread DeleteThread = new Thread(new ThreadStart(()=>{}));
+           
             Thread SelectThread = new Thread(new ThreadStart(()=>{}));
             
             while(command)
@@ -30,6 +30,7 @@ namespace HW28._04
                 Console.WriteLine("Delete client--3");
                 Console.WriteLine("Select by id --4");
                 Console.WriteLine("Exit-----------5");
+                Console.WriteLine("--------------------------------");
                 int action = int.Parse(Console.ReadLine());
                 
                 switch(action)
@@ -37,7 +38,7 @@ namespace HW28._04
                     case 1:
                         Console.Write("FirstName: ");
                         fname = Console.ReadLine();
-
+                        
                         Console.Write("LastName:     ");
                         lname = Console.ReadLine();
 
@@ -82,18 +83,70 @@ namespace HW28._04
                         }                    
                         break;
                     case 3:
+                        Console.Write("Choose Id of client to delete: ");
+                        id= int.Parse(Console.ReadLine());
+
+                        if (!Client.SelectById(id, MainClientList))
+                            Console.WriteLine("Error: No client with such id!");
+                        else 
+                        { 
+                            Thread DeleteThread = new Thread(new ThreadStart(()=>Client.Delete(id, MainClientList)));
+                            Console.WriteLine($"Client with id {id} was deleted");
+                        }                   
                         break;
                     case 4:
+                        Console.Write("Choose id: ");
+                        id= int.Parse(Console.ReadLine());
+
+                        if (!Client.SelectById(id, MainClientList))
+                            Console.WriteLine("Error: No client with such id!");
+                        else
+                        {
+                            Thread DeleteThread = new Thread(new ThreadStart(()=>Client.SelectById(id, MainClientList)));
+                            Console.WriteLine("--------------------------------");
+                        }
                         break;
                     case 5:
-                        Console.WriteLine("Пока!");
+                        Console.WriteLine("Bye!");
+                        Console.WriteLine("--------------------------------");
                         command = false;
                         break;
+                    default:
+                        Console.WriteLine("Error: Wrong command. Try again!");
+                        Console.WriteLine("--------------------------------");
+                        break;
+                   
 
                 }
             }
-        
         }
+        public static void BalanceChangingStatistic()
+        {
+            bool balancechangestatus = false;
+            char sign;
+            decimal difference = 0;
+            foreach(Client c in MainClientList)
+            {
+                if (balancechangestatus)
+                {
+                    Console.WriteLine("Balance changings list:");
+                    Console.WriteLine("|Id     |PrevBalance|Curbalance |Difference|");
+                    Console.WriteLine("-------------------------------");
+                }
+                if (c.PreviousBalance != -1)
+                {
+                    if (!balancechangestatus) balancechangestatus = true;
+
+                    Console.ForegroundColor = (c.PreviousBalance > c.CurrentBalance)? ConsoleColor.Red :ConsoleColor.Green; 
+                    difference = Math.Abs(c.PreviousBalance - c.CurrentBalance);
+                    sign = (c.PreviousBalance > c.CurrentBalance) ? '-' : '+';
+                    Console.WriteLine($"{c.Id,-9} {c.PreviousBalance,-5} {c.CurrentBalance, -5}{difference,-5}");
+                    c.PreviousBalance = -1;
+                }
+                
+            }
+        }
+
     }
     
 }
