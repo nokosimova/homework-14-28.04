@@ -38,7 +38,13 @@ public class Client
     public static void Insert(object obj, List<Client> MainList)
     {
         Client client = obj as Client;
-        MainList.Add(client);            
+        MainList.Add(client);  
+        Console.WriteLine("---------------------------------");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Client was successfully inserted!");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine("---------------------------------");
+                                  
     }
     public static void UpdateById(object obj, List<Client> MainList)
     {
@@ -58,6 +64,10 @@ public class Client
                         MainList[i].PreviousBalance = MainList[i].CurrentBalance;
                     MainList[i].CurrentBalance = updatedClient.CurrentBalance;
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Client was successfully updated!");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("---------------------------------");
             }
         }
     }
@@ -83,6 +93,14 @@ public class Client
             break;
         }
         return clientExistStatus;
+    }
+    public static void SelectAll(List<Client> MainList)
+    {
+        Console.WriteLine($"COUNT:   {MainList.Count}");
+        Console.Write("|id   |FIO                |Age     |CurrentBalance \n");
+        Console.WriteLine("----------------------------------------");
+        foreach(Client c in MainList)
+            Console.WriteLine($"{c.Id,-3} {c.FirstName+c.LastName+c.MiddleName,-9} {c.Age,-5}{c.CurrentBalance,-15}");           
     }
 }
 }

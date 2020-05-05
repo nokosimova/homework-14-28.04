@@ -1,0 +1,13 @@
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.exe
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.deps.json
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.runtimeconfig.json
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.runtimeconfig.dev.json
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.dll
+C:\projects\hw28.04\bin\Debug\netcoreapp3.1\HW28.04.pdb
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.csprojAssemblyReference.cache
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.csproj.CoreCompileInputs.cache
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.AssemblyInfoInputs.cache
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.AssemblyInfo.cs
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.dll
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.pdb
+C:\projects\hw28.04\obj\Debug\netcoreapp3.1\HW28.04.genruntimeconfig.cache
