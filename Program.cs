@@ -8,20 +8,18 @@ namespace HW28._04
     class Program
     {
         static List<Client> MainClientList = new List<Client>();
+        static int LastId = 0;
         static void Main(string[] args)
         {
-          //  Client newclient = new Client();
-            ListandClient x = new ListandClient();
             bool command = true;
-            int LastId = 0;
             decimal balance;
+            int age;
             string fname, lname, mname;
             
-            Thread InsertThread = new Thread(new ThreadStart(()=>{
-            }));
-            Thread UpdateThread = new Thread(new ThreadStart(()=>{}));
+            
+            
             Thread DeleteThread = new Thread(new ThreadStart(()=>{}));
-            Thread SelectThread = new Thread(new ThreadStart(()=>{})));
+            Thread SelectThread = new Thread(new ThreadStart(()=>{}));
             
             while(command)
             {
@@ -47,35 +45,41 @@ namespace HW28._04
                         mname = Console.ReadLine();
 
                         Console.Write("Age:");
+                        age = int.Parse(Console.ReadLine());
 
-
-                        Console.Write("Баланс:   ");
+                        Console.Write("Balance:   ");
                         balance = decimal.Parse(Console.ReadLine());
 
-                        Client newclient = new Client(++LastId, fname, lname, mname, balance);
-                        x.client = newclient;
-                        x.ClientList = MainClientList;
-                        
-                        InsertThread.Start(x);
+                        Client newclient = new Client(++LastId, fname, lname, mname, balance, age);                        
+                        Thread InsertThread = new Thread(new ThreadStart(()=>Client.Insert(newclient,MainClientList)));
                         break;
                     case 2:
-                        Client updateclient = new Client();
-                        Console.WriteLine("id клиента: ");
-                     //   updateclient
+                        Console.Write("Choose id: ");
+                        int id= int.Parse(Console.ReadLine());
 
-                        Console.Write("Фамилия: ");
-                        fname = Console.ReadLine();
+                        if (!Client.SelectById(id, MainClientList))
+                            Console.WriteLine("Error: No client with such id!");
+                        else
+                        {
+                            Console.WriteLine("Write new data, if necessary, or click enter near field, if not.");
+                            Console.Write("FirstName: ");
+                            fname = Console.ReadLine();
 
-                        Console.Write("Имя:     ");
-                        lname = Console.ReadLine();
+                            Console.Write("LastName:     ");
+                            lname = Console.ReadLine();
 
-                        Console.Write("Отчество:");
-                        mname = Console.ReadLine();
+                            Console.Write("MiddleName:");
+                            mname = Console.ReadLine();
 
-                        Console.Write("Баланс:   ");
-                        balance = decimal.Parse(Console.ReadLine());
+                            Console.Write("Age:");
+                            age = int.Parse(Console.ReadLine());
 
-                        
+                            Console.Write("Balance:   ");
+                            balance = decimal.Parse(Console.ReadLine());
+                            
+                            Client updatedClient = new Client(id, fname, lname, mname, balance, age);
+                            Thread UpdateThread = new Thread(new ThreadStart(()=>{Client.UpdateById(updatedClient,MainClientList);}));
+                        }                    
                         break;
                     case 3:
                         break;

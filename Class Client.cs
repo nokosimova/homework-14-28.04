@@ -5,42 +5,35 @@ using HW28._04;
 namespace Class
 {
 
-public class ListandClient
-{
-    public List<Client> ClientList{get;set;}
-    public Client client{get;set;}
-}
 
-public class ListAndId
-{
-    public List<Client> ClientList{get;set;}
-    public int id{get; set;}
-
-}
 public class Client
 {
     int Id{get; set;}
-    decimal Balance{get; set;}
+    decimal CurrentBalance{get; set;}
+    decimal PreviousBalance {get; set;}
     string FirstName{get; set;}
     string LastName{get; set;}
     string MiddleName{get; set;}
     int Age{get; set;}
+    
     public Client()
     {
         Id = 0;
         FirstName = null;
         LastName = null;
         MiddleName = null;
-        Balance = -1;
+        CurrentBalance = -1;
+        PreviousBalance  = -1;
         Age = 0;
     }
-    public Client(int id = 0, string firstname = null, string lastname = null, string midname = null, decimal balance = -1, int age = 0)
+    public Client(int id = 0, string firstname = null, string lastname = null, string midname = null, decimal Currentbalance = -1, int age = 0)
     {
         Id = id;
         FirstName = firstname;
         LastName = lastname;
         MiddleName = midname;
-        Balance = balance;
+        CurrentBalance = Currentbalance;
+        Age = age;
     }
     public static void Insert(object obj, List<Client> MainList)
     {
@@ -57,8 +50,13 @@ public class Client
                 if (updatedClient.FirstName != null) MainList[i].FirstName = updatedClient.FirstName;
                 if (updatedClient.LastName != null) MainList[i].LastName = updatedClient.LastName;
                 if (updatedClient.MiddleName != null) MainList[i].MiddleName = updatedClient.MiddleName;
-                if (updatedClient.Balance != -1 && updatedClient.Balance >= 0) MainList[i].Balance = updatedClient.Balance;
+                if (updatedClient.CurrentBalance != -1 && updatedClient.CurrentBalance >= 0) MainList[i].CurrentBalance = updatedClient.CurrentBalance;
                 if (updatedClient.Age != 0 && updatedClient.Age > 0) MainList[i].Age = updatedClient.Age;
+                if (updatedClient.CurrentBalance != -1 && updatedClient.CurrentBalance >= 0)
+                { 
+                    MainList[i].PreviousBalance = MainList[i].CurrentBalance;
+                    MainList[i].CurrentBalance = updatedClient.CurrentBalance;
+                }
             }
         }
     }
@@ -67,20 +65,23 @@ public class Client
         Client deletingClient = obj as Client;
         MainList.Remove(deletingClient);
     }
-    public static void Select(object obj, List<Client> MainList)
+    public static bool SelectById(object obj, List<Client> MainList)
     {
+        bool clientExistStatus = false;
         int selectedClientId = (int)obj;
-        Client ans = new Client();
-        foreach (Client c in MainList)
+        for(int i = 0; i < MainList.Count; i++)
         {
+            Client c = MainList[i];
             if (c.Id == selectedClientId)
             {
-                Console.Write("|id   |FIO                |Age     |Balance \n");
+                clientExistStatus = true;
+                Console.Write("|id   |FIO                |Age     |CurrentBalance \n");
                 Console.WriteLine("----------------------------------------");
-                Console.WriteLine($"{c.Id,-3} {c.FirstName+c.LastName+c.MiddleName,-9} {c.Age,-5}{c.Balance,-15}");
+                Console.WriteLine($"{c.Id,-3} {c.FirstName+c.LastName+c.MiddleName,-9} {c.Age,-5}{c.CurrentBalance,-15}");
             }
             break;
         }
+        return clientExistStatus;
     }
 }
 }
